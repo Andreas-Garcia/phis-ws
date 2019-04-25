@@ -1,7 +1,7 @@
 //******************************************************************************
 //                              VariableDAO.java 
 // SILEX-PHIS
-// Copyright © INRA 2018
+// Copyright © INRA 2017
 // Creation date: 16 Nov. 2017
 // Contact: morgane.vidal@inra.fr, anne.tireau@inra.fr, pascal.neveu@inra.fr
 //******************************************************************************
@@ -581,7 +581,10 @@ public class VariableDAO extends Rdf4jDAO<Variable> {
         Resource variableUri = ResourceFactory.createResource(variable.getUri());
         
         spql.addDelete(graph, variableUri, RDFS.label, variable.getLabel());
-        spql.addDelete(graph, variableUri, RDFS.comment, variable.getComment());
+        
+        if(variable.getComment() != null) {
+            spql.addDelete(graph, variableUri, RDFS.comment, variable.getComment());
+        }
         
         Property relationTrait = ResourceFactory.createProperty(Oeso.RELATION_HAS_TRAIT.toString());
         Property relationMethod = ResourceFactory.createProperty(Oeso.RELATION_HAS_METHOD.toString());
@@ -608,7 +611,7 @@ public class VariableDAO extends Rdf4jDAO<Variable> {
         return spql.buildRequest();        
     }    
     
-    private POSTResultsReturn AndReturnPOSTResultsReturn(List<VariableDTO> variablesDTO) {
+    private POSTResultsReturn updateAndReturnPOSTResultsReturn(List<VariableDTO> variablesDTO) {
         List<Status> updateStatusList = new ArrayList<>();
         List<String> updatedResourcesURIList = new ArrayList<>();
         POSTResultsReturn results;
@@ -682,7 +685,7 @@ public class VariableDAO extends Rdf4jDAO<Variable> {
     public POSTResultsReturn checkAndUpdate(List<VariableDTO> variablesDTO) {
         POSTResultsReturn checkResult = check(variablesDTO);
         if (checkResult.getDataState()) {
-            return AndReturnPOSTResultsReturn(variablesDTO);
+            return updateAndReturnPOSTResultsReturn(variablesDTO);
         } else { //Les données ne sont pas bonnes
             return checkResult;
         }

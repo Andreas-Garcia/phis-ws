@@ -1,7 +1,8 @@
 //******************************************************************************
-//                                       VariableResourceService.java 
+//                             VariableResourceService.java 
+// SILEX-PHIS
 // Copyright © INRA 2017
-// Creation date: 14 November 2017
+// Creation date: 14 Nov. 2017
 // Contact: morgane.vidal@inra.fr, anne.tireau@inra.fr, pascal.neveu@inra.fr
 //******************************************************************************
 package opensilex.service.resource;
@@ -76,7 +77,9 @@ public class VariableResourceService extends ResourceService {
     })
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postVariable(@ApiParam(value = DocumentationAnnotation.VARIABLE_POST_DATA_DEFINITION) @Valid ArrayList<VariableDTO> variables,
+    public Response postVariable(
+            @ApiParam(value = DocumentationAnnotation.VARIABLE_POST_DATA_DEFINITION) 
+                @Valid ArrayList<VariableDTO> variables,
             @Context HttpServletRequest context) {
         AbstractResultForm postResponse = null;
         
